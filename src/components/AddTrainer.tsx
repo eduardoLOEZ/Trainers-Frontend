@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { PokemonTrainer } from "../interfaces/PokemonTrainer";
 import { useNavigate } from "react-router-dom";
+import { validateTrainer } from "../utils/validation";
 
 const AddTrainer: React.FC = () => {
   const navigate = useNavigate();
@@ -21,27 +22,10 @@ const AddTrainer: React.FC = () => {
     });
   };
 
-  const validate = () => {
-    const newErrors: { [key: string]: string } = {};
-    if (!trainer.firstName || trainer.firstName.length < 2) {
-      newErrors.firstName = "El nombre debe tener al menos 2 caracteres";
-    }
-    if (!trainer.lastName || trainer.lastName.length < 2) {
-      newErrors.lastName = "Los apellidos deben tener al menos 2 caracteres";
-    }
-    if (!trainer.phoneNumber || !/^\d{10}$/.test(trainer.phoneNumber)) {
-      newErrors.phoneNumber = "El número de teléfono debe tener 10 dígitos";
-    }
-    if (trainer.gymBadges < 0 || trainer.gymBadges > 8) {
-      newErrors.gymBadges = "El número de medallas debe estar entre 0 y 8";
-    }
-    return newErrors;
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formErrors = validate();
+    const formErrors = validateTrainer(trainer);
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
       return;
