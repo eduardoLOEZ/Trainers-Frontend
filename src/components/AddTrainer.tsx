@@ -4,8 +4,18 @@ import { PokemonTrainer } from "../interfaces/PokemonTrainer";
 import { useNavigate } from "react-router-dom";
 import { validateTrainer } from "../utils/validation";
 
+/**
+ * AddTrainer Component
+ *
+ * Componente que muestra la pagina para agregar un nuevo entrenador con los datos proporcionados
+ * funcionalidad de agregar, validar y guardar los datos del nuevo entrenador
+ */
+
 const AddTrainer: React.FC = () => {
+  // Hook para navegar a diferentes rutas
   const navigate = useNavigate();
+
+  // Estado inicial del entrenador
   const [trainer, setTrainer] = useState<PokemonTrainer>({
     firstName: "",
     lastName: "",
@@ -13,8 +23,10 @@ const AddTrainer: React.FC = () => {
     gymBadges: 0,
   });
 
+  // Estado para manejar errores de validación
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+  // Función para manejar cambios en los campos del formulario
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTrainer({
       ...trainer,
@@ -22,20 +34,22 @@ const AddTrainer: React.FC = () => {
     });
   };
 
+  // Función para manejar cambios en los campos del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formErrors = validateTrainer(trainer);
+    const formErrors = validateTrainer(trainer); // Valida el formulario
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
       return;
     }
     try {
+      // Solicitud POST para agregar un nuevo entrenador
       await axios.post(
         "https://trainers-backend.onrender.com/api/trainers",
         trainer
       );
-      navigate("/");
+      navigate("/"); // Navega a la página principal después de agregar el entrenador
     } catch (error) {
       console.error("Error adding trainer", error);
     }

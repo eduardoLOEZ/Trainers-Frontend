@@ -64,16 +64,24 @@ export default function TrainerList() {
    */
   const downloadCSV = async () => {
     try {
+      //Realiza una solicitud GET al backend para obtener el archivo CSV
       const response = await axios.get(
         "https://trainers-backend.onrender.com/api/trainers/download/csv",
         {
-          responseType: "blob",
+          responseType: "blob", // Indica que el tipo de respuesta es un blob
+          //(Binary Large Object):  Los blobs son objetos de tipo binario que contienen datos como imágenes, audio, archivos y otros formatos binarios.
         }
       );
+
+      // Crea una URL para el blob recibido desde la respuesta.
       const url = window.URL.createObjectURL(new Blob([response.data]));
+
+      // Crea un elemento <a> para descargar el archivo.
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", "trainers.csv");
+      link.setAttribute("download", "trainers.csv"); // Establece el nombre del archivo a descargar.
+
+      // Agrega el enlace al DOM y simula un clic en el enlace para iniciar la descarga.
       document.body.appendChild(link);
       link.click();
     } catch (error) {

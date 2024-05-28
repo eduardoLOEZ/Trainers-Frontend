@@ -3,9 +3,20 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { validateTrainer } from "../utils/validation";
 
+/**
+ * EditTrainer Component
+ *
+ * Componente que muestra la pagina para poder editar un entrenador con los datos cargados actuales
+ * funcionalidad editar, validar y guardar esos datos nuevos
+ */
+
 const EditTrainer = () => {
+  // Hooks para navegar y obtener parámetros de la URL
   const navigate = useNavigate();
-  const { id } = useParams();
+
+  const { id } = useParams(); // Extrae el ID de la URL
+
+  // Estado inicial del entrenador
   const [trainer, setTrainer] = useState({
     firstName: "",
     lastName: "",
@@ -13,38 +24,45 @@ const EditTrainer = () => {
     gymBadges: 0,
   });
 
+  // Estado para manejar errores de validación
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
+  // useEffect para obtener los datos del entrenador cuando se monta el componente
   useEffect(() => {
     const fetchTrainer = async () => {
       try {
+        // Solicitud GET para obtener los datos del entrenador por ID
         const response = await axios.get(
           `https://trainers-backend.onrender.com/api/trainers/${id}`
         );
-        setTrainer(response.data);
+        setTrainer(response.data); // Establece el estado del entrenador con los datos recibidos
       } catch (error) {
         console.error("Error fetching trainer", error);
       }
     };
 
     fetchTrainer();
-  }, [id]);
+  }, [id]); // Dependencia de useEffect para ejecutar cuando cambia el ID
 
+  // Función para manejar cambios en los campos del formulario
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTrainer({
       ...trainer,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value, // Actualiza el campo correspondiente en el estado
     });
   };
 
+  // Función para manejar el envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formErrors = validateTrainer(trainer);
+
+    const formErrors = validateTrainer(trainer); // Valida el formulario
     if (Object.keys(formErrors).length > 0) {
-      setErrors(formErrors);
+      setErrors(formErrors); // Establece los errores de validación si los hay
       return;
     }
     try {
+      // Solicitud PUT para actualizar los datos del entrenador
       await axios.put(
         `https://trainers-backend.onrender.com/api/trainers/${id}`,
         trainer
