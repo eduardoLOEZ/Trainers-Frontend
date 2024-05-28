@@ -1,6 +1,43 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Pokémon Trainer Management System
+
+## Descripción
+
+Este proyecto es un sistema de gestión de entrenadores Pokémon. Permite a los usuarios agregar, editar, eliminar y ver una lista de entrenadores Pokémon. También proporciona la funcionalidad para descargar la lista de entrenadores en formato CSV. El frontend de la aplicación está desarrollado utilizando React y React Router, mientras que el backend utiliza Node.js y Express.
+
+## Características
+
+- **Agregar Entrenadores**: Permite a los usuarios agregar nuevos entrenadores Pokémon.
+- **Editar Entrenadores**: Permite a los usuarios editar la información existente de los entrenadores.
+- **Eliminar Entrenadores**: Permite a los usuarios eliminar entrenadores de la lista.
+- **Ver Lista de Entrenadores**: Muestra una lista de todos los entrenadores Pokémon registrados.
+- **Descargar Lista en CSV**: Permite a los usuarios descargar la lista completa de entrenadores en formato CSV.
+
+## Estructura del Proyecto
+
+```plaintext
+.
+├── public
+│   ├── index.html
+│   └── ...
+├── src
+│   ├── components
+│   │   ├── AddTrainer.tsx
+│   │   ├── EditTrainer.tsx
+│   │   ├── TrainerList.tsx
+│   │   └── ...
+│   ├── interfaces
+│   │   └── PokemonTrainer.ts
+│   ├── utils
+│   │   └── validation.ts
+│   ├── App.tsx
+│   ├── index.tsx
+│   └── ...
+├── package.json
+├── tsconfig.json
+└── README.md
+```
 
 
 
