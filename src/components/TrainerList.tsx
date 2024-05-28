@@ -65,7 +65,7 @@ export default function TrainerList() {
   const downloadCSV = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3001/api/trainers/download/csv",
+        "https://trainers-backend.onrender.com/api/trainers/download/csv",
         {
           responseType: "blob",
         }
